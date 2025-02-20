@@ -1,6 +1,6 @@
 import unittest
 import tkinter as tk
-from GUI import SimpleGUI  # Adjust this import to match your file name
+from GUI import SimpleGUI  # Adjust this import as needed
 
 class TestSimpleGUI(unittest.TestCase):
     def setUp(self):
@@ -22,6 +22,7 @@ class TestSimpleGUI(unittest.TestCase):
         
         # Simulate clicking the save button.
         self.app.save_button.invoke()
+        self.app.update_idletasks()
         self.app.update()
 
         # Verify that one trade was added.
@@ -33,8 +34,7 @@ class TestSimpleGUI(unittest.TestCase):
         self.assertEqual(trade[0], "Power")
         self.assertEqual(trade[1], "Physical")
         self.assertEqual(trade[2], "Buy")
-        # Convert trade[3] to float before comparing.
-        self.assertEqual(float(trade[3]), 100.0)
+        self.assertEqual(float(trade[3]), 100.0)  # Convert to float for comparison
 
         # Verify the position (subtotal) is updated correctly.
         pos_items = self.app.position_tree.get_children()
@@ -51,6 +51,7 @@ class TestSimpleGUI(unittest.TestCase):
         
         # Simulate clicking the save button.
         self.app.save_button.invoke()
+        self.app.update_idletasks()
         self.app.update()
 
         # Verify that one trade was added.
@@ -62,8 +63,7 @@ class TestSimpleGUI(unittest.TestCase):
         self.assertEqual(trade[0], "ULSD")
         self.assertEqual(trade[1], "Financial")
         self.assertEqual(trade[2], "Sell")
-        # Convert trade[3] to float before comparing.
-        self.assertEqual(float(trade[3]), -50.0)
+        self.assertEqual(float(trade[3]), -50.0)  # Convert to float for comparison
 
         # Verify the position (subtotal) is updated correctly.
         pos_items = self.app.position_tree.get_children()
@@ -78,6 +78,7 @@ class TestSimpleGUI(unittest.TestCase):
         self.app.buy_sell_dropdown.set("Buy")
         self.app.value_entry.insert(0, "100")
         self.app.save_button.invoke()
+        self.app.update_idletasks()
         self.app.update()
         
         # Add a Sell trade of 20.
@@ -86,6 +87,7 @@ class TestSimpleGUI(unittest.TestCase):
         self.app.buy_sell_dropdown.set("Sell")
         self.app.value_entry.insert(0, "20")
         self.app.save_button.invoke()
+        self.app.update_idletasks()
         self.app.update()
         
         # Expect a subtotal of 100 + (-20) = 80.00.
