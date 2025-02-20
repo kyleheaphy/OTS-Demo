@@ -6,7 +6,7 @@ class TestSimpleGUI(unittest.TestCase):
     def setUp(self):
         # Create an instance of the GUI without calling mainloop.
         self.app = SimpleGUI()
-        # Call update() to ensure all widgets are fully initialized.
+        # Force initialization.
         self.app.update()
 
     def tearDown(self):
@@ -22,6 +22,7 @@ class TestSimpleGUI(unittest.TestCase):
         
         # Simulate clicking the save button.
         self.app.save_button.invoke()
+        self.app.update()
 
         # Verify that one trade was added.
         trades = self.app.tree.get_children()
@@ -32,7 +33,8 @@ class TestSimpleGUI(unittest.TestCase):
         self.assertEqual(trade[0], "Power")
         self.assertEqual(trade[1], "Physical")
         self.assertEqual(trade[2], "Buy")
-        self.assertEqual(trade[3], 100.0)  # Buy trades remain positive
+        # Convert trade[3] to float before comparing.
+        self.assertEqual(float(trade[3]), 100.0)
 
         # Verify the position (subtotal) is updated correctly.
         pos_items = self.app.position_tree.get_children()
@@ -49,6 +51,7 @@ class TestSimpleGUI(unittest.TestCase):
         
         # Simulate clicking the save button.
         self.app.save_button.invoke()
+        self.app.update()
 
         # Verify that one trade was added.
         trades = self.app.tree.get_children()
@@ -59,7 +62,8 @@ class TestSimpleGUI(unittest.TestCase):
         self.assertEqual(trade[0], "ULSD")
         self.assertEqual(trade[1], "Financial")
         self.assertEqual(trade[2], "Sell")
-        self.assertEqual(trade[3], -50.0)  # Sell trades become negative
+        # Convert trade[3] to float before comparing.
+        self.assertEqual(float(trade[3]), -50.0)
 
         # Verify the position (subtotal) is updated correctly.
         pos_items = self.app.position_tree.get_children()
@@ -74,6 +78,7 @@ class TestSimpleGUI(unittest.TestCase):
         self.app.buy_sell_dropdown.set("Buy")
         self.app.value_entry.insert(0, "100")
         self.app.save_button.invoke()
+        self.app.update()
         
         # Add a Sell trade of 20.
         self.app.commodity_dropdown.set("Natural Gas")
@@ -81,6 +86,7 @@ class TestSimpleGUI(unittest.TestCase):
         self.app.buy_sell_dropdown.set("Sell")
         self.app.value_entry.insert(0, "20")
         self.app.save_button.invoke()
+        self.app.update()
         
         # Expect a subtotal of 100 + (-20) = 80.00.
         pos_items = self.app.position_tree.get_children()
