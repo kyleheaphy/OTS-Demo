@@ -28,4 +28,4 @@ jobs:
       
     - name: Run Tests
       run: | 
-        python ./GUI_unit_test.py
+        xvfb-run python ./GUI_unit_test.py
