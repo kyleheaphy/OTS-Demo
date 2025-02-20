@@ -120,6 +120,11 @@ class SimpleGUI(tk.Tk):
                     continue
             self.subtotal_label.config(text=f"Subtotal: {total:.2f}")
 
+            # Update the Position table by clearing it and inserting the new subtotal
+            for item in self.position_tree.get_children():
+                self.position_tree.delete(item)
+            self.position_tree.insert("", "end", values=(f"{total:.2f}",))
+
 if __name__ == "__main__":
     app = SimpleGUI()
     app.mainloop()
