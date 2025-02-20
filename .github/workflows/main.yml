@@ -58,14 +58,14 @@ jobs:
           echo "$HOME/go/bin" >> $GITHUB_PATH
           
     - name: Run Tests
-      run: | 
-        xvfb-run python -m xmlrunner GUI_unit_test.py -o test-results.xml
-        
-    - name: Wrap Test Results in <testsuites>
+      run: xvfb-run python -m xmlrunner GUI_unit_test.py -o test-results-dir
+    
+    - name: Combine Test Results into single XML file
       run: |
-        mv test-results.xml temp-results.xml
         echo "<testsuites>" > test-results.xml
-        cat temp-results.xml >> test-results.xml
+        for file in test-results-dir/*.xml; do
+          cat "$file" >> test-results.xml
+        done
         echo "</testsuites>" >> test-results.xml
         
     - name: Upload test results to Qase
