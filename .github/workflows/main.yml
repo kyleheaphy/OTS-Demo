@@ -60,7 +60,14 @@ jobs:
     - name: Run Tests
       run: | 
         xvfb-run python -m xmlrunner GUI_unit_test.py -o test-results.xml
-
+        
+    - name: Wrap Test Results in <testsuites>
+      run: |
+        mv test-results.xml temp-results.xml
+        echo "<testsuites>" > test-results.xml
+        cat temp-results.xml >> test-results.xml
+        echo "</testsuites>" >> test-results.xml
+        
     - name: Upload test results to Qase
       run: |
         qasectl testops result upload \
