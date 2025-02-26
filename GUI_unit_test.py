@@ -96,5 +96,10 @@ class TestSimpleGUI(unittest.TestCase):
         subtotal = self.app.position_tree.item(pos_items[0])['values'][0]
         self.assertEqual(subtotal, "80.00")
 
+
+    def test_force_fail(self):
+        """A test case that always fails to simulate a failure."""
+        self.fail("This is an intentionally failed test case.")
+        
 if __name__ == "__main__":
     unittest.main()
