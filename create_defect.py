@@ -41,15 +41,16 @@ if not failed_tests:
 for test_name, failure_message in failed_tests:
     payload = {
         "title": f"Test Failure: {test_name}",
-        "description": f"Test case '{test_name}' failed with error:\n{failure_message}",
+        "actual_result": f"Test case '{test_name}' failed with error:\n{failure_message}",
+        "severity": 2,
         "status": "Open",  # or other appropriate status
-        "project_code": qase_project_code,
+        "code": qase_project_code,
     }
     headers = {
         "Content-Type": "application/json",
         "Token": qase_api_token,
     }
-    url = f"{qase_api_base_url}/v1/defect"  # Verify this endpoint with Qase API docs.
+    url = f"{qase_api_base_url}/defect"  # Verify this endpoint with Qase API docs.
     response = requests.post(url, data=json.dumps(payload), headers=headers)
     if response.status_code in (200, 201):
         print(f"Defect created for {test_name}.")

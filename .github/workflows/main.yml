@@ -53,6 +53,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install unittest-xml-reporting pytest junitparser
+        pip install requests
 
     - name: Install Qase CLI 
       run: |
@@ -68,7 +69,8 @@ jobs:
       run: |
         echo "<testsuites>" > test-results.xml
         for file in test-results-dir/*.xml; do
-          cat "$file" >> test-results.xml
+          # Append each file's content skipping the first line (the XML declaration)
+          tail -n +2 "$file" >> test-results.xml
         done
         echo "</testsuites>" >> test-results.xml
 
