@@ -41,9 +41,9 @@ if not failed_tests:
 for test_name, failure_message in failed_tests:
     payload = {
         "title": f"Test Failure: {test_name}",
-        "result": f"Test case '{test_name}' failed with error:\n{failure_message}",
-        "severity": "Normal",
-        # "status": "Open",  # or other appropriate status
+        "actual_result": f"Test case '{test_name}' failed with error:\n{failure_message}",
+        "severity": 2,
+        "status": "Open",  # or other appropriate status
         "code": qase_project_code,
     }
     headers = {
