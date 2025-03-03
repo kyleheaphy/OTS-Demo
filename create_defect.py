@@ -43,7 +43,7 @@ for test_name, failure_message in failed_tests:
         "title": f"Test Failure: {test_name}",
         "description": f"Test case '{test_name}' failed with error:\n{failure_message}",
         "status": "Open",  # or other appropriate status
-        "projectCode": qase_project_code,
+        "code": qase_project_code,
     }
     headers = {
         "Content-Type": "application/json",
