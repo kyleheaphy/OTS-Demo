@@ -81,7 +81,12 @@ jobs:
           --id "$QASE_RUN_ID" \
           --format junit \
           --path test-results.xml
-
+          
+    - name: Create Defects for Failed Tests
+      if: always()
+      run: |
+        python create_defect.py
+        
     - name: Complete Qase Run (Even on Failure)
       if: always()
       run: |
