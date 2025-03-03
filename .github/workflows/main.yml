@@ -53,6 +53,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install unittest-xml-reporting pytest junitparser
+        pip install requests
 
     - name: Install Qase CLI 
       run: |
