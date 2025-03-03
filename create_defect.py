@@ -87,7 +87,17 @@ def create_jira_issue(test_name, failure_message):
             }
         }
     }
+    print("Creating Jira issue with payload:")
+    print(json.dumps(payload, indent=2))
     response = requests.post(url, data=json.dumps(payload), headers=headers)
+    print("Jira response status code:", response.status_code)
+    try:
+        response_data = response.json()
+        print("Jira response JSON:", json.dumps(response_data, indent=2))
+    except Exception as e:
+        print("Failed to parse Jira response as JSON:", response.text)
+        return None
+        
     if response.status_code in (200, 201):
         jira_issue = response.json()
         jira_issue_key = jira_issue.get("key")
