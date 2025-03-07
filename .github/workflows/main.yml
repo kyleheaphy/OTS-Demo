@@ -88,11 +88,19 @@ jobs:
           --format junit \
           --path test-results.xml
           
-    - name: Create Defects for Failed Tests
+    - name: Create Defects for Failed Tests and Jira Issues
       if: always()
       run: |
         python create_defect.py
-        
+      env:
+          QASE_API_BASE_URL: ${{ secrets.QASE_API_BASE_URL }}
+          QASE_API_TOKEN: ${{ secrets.QASE_API_TOKEN }}
+          QASE_PROJECT_CODE: ${{ secrets.QASE_PROJECT_CODE }}
+          JIRA_DOMAIN: ${{ vars.JIRA_DOMAIN }}
+          JIRA_EMAIL: ${{ vars.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ vars.JIRA_API_TOKEN }}
+          JIRA_PROJECT_KEY: ${{ vars.JIRA_PROJECT_KEY }}
+          
     - name: Complete Qase Run (Even on Failure)
       if: always()
       run: |
