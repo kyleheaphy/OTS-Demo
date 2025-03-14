@@ -64,7 +64,7 @@ jobs:
       run: |
         mkdir -p test-results-dir
         xvfb-run python -m xmlrunner GUI_unit_test.py -o test-results-dir || true
-
+             
     - name: Combine Test Results into Single XML File
       run: |
         echo "<testsuites>" > test-results.xml
@@ -73,7 +73,10 @@ jobs:
           tail -n +2 "$file" >> test-results.xml
         done
         echo "</testsuites>" >> test-results.xml
-
+        
+    - name: Modify Test Suite Names
+      run: python modify_suite_names.py
+      
     - name: Upload Test Results to Qase (Even on Failure)
       if: always()
       run: |
