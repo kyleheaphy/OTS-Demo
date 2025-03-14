@@ -1,16 +1,26 @@
+import glob
 import xml.etree.ElementTree as ET
 
-# Parse the combined XML file
-tree = ET.parse("test-results.xml")
-root = tree.getroot()
+# Create a new root element
+root = ET.Element("testsuites")
 
-# Loop through each testsuite element and modify its name
-for testsuite in root.findall("testsuite"):
-    old_name = testsuite.get("name")
-    # For example, prefix the name with "Modified - "
-    new_name = f"Modified - {old_name}"
-    testsuite.set("Release Testing", new_name)
+# Iterate over all XML files in the test results directory
+for file in glob.glob("test-results-dir/*.xml"):
+    tree = ET.parse(file)
+    file_root = tree.getroot()
+    # Some files may have <testsuite> as the root while others <testsuites>
+    if file_root.tag == "testsuite":
+        # Optionally modify the suite name
+        old_name = file_root.get("name", "")
+        file_root.set("name", f"Modified - {old_name}")
+        root.append(file_root)
+    elif file_root.tag == "testsuites":
+        for testsuite in file_root.findall("testsuite"):
+            old_name = testsuite.get("name", "")
+            testsuite.set("name", f"Modified - {old_name}")
+            root.append(testsuite)
 
-# Write the updated XML back to file
-tree.write("test-results.xml", encoding="utf-8", xml_declaration=True)
-print("Test suite names updated.")
+# Write out the merged and modified XML file
+tree_out = ET.ElementTree(root)
+tree_out.write("test-results.xml", encoding="utf-8", xml_declaration=True)
+print("Merged and modified XML file created.")
