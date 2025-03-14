@@ -79,7 +79,7 @@ jobs:
         echo "</testsuites>" >> test-results.xml
         
     - name: Merge and Modify Test Results XML
-      run: python merge_and_modify_xml.py
+      run: python modify_suite_names.py
 
       
     - name: Upload Test Results to Qase (Even on Failure)
