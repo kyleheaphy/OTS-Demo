@@ -78,8 +78,8 @@ jobs:
         done
         echo "</testsuites>" >> test-results.xml
         
-    - name: Modify Test Suite Names
-      run: python modify_suite_names.py
+    # - name: Modify Test Suite Names
+    #   run: python modify_suite_names.py
       
     - name: Upload Test Results to Qase (Even on Failure)
       if: always()
