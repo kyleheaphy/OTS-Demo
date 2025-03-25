@@ -1,4 +1,4 @@
-name: Demo
+name: Demo - Unit Test
 
 on:
   push:
