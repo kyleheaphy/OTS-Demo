@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Objects</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    .container {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+    .object {
+      flex: 1;
+      transition: all 0.3s ease;
+      padding: 10px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .object.expanded {
+      flex: 3;
+      background: #e0f7fa;
+    }
+    .details {
+      display: none;
+      margin-top: 10px;
+    }
+    .object.expanded .details {
+      display: block;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interactive Object Viewer</h1>
+  <div class="container" id="objectContainer">
+    <div class="object" onclick="expandObject(this)">
+      <h2>Object 1</h2>
+      <div class="details">
+        <img src="https://via.placeholder.com/150" alt="Image 1">
+        <ul>
+          <li>Detail A1</li>
+          <li>Detail A2</li>
+          <li>Detail A3</li>
+        </ul>
+      </div>
+    </div>
+    <div class="object" onclick="expandObject(this)">
+      <h2>Object 2</h2>
+      <div class="details">
+        <img src="https://via.placeholder.com/150" alt="Image 2">
+        <ul>
+          <li>Detail B1</li>
+          <li>Detail B2</li>
+          <li>Detail B3</li>
+        </ul>
+      </div>
+    </div>
+    <div class="object" onclick="expandObject(this)">
+      <h2>Object 3</h2>
+      <div class="details">
+        <img src="https://via.placeholder.com/150" alt="Image 3">
+        <ul>
+          <li>Detail C1</li>
+          <li>Detail C2</li>
+          <li>Detail C3</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function expandObject(clicked) {
+      document.querySelectorAll('.object').forEach(obj => {
+        obj.classList.remove('expanded');
+      });
+      clicked.classList.add('expanded');
+    }
+  </script>
+</body>
+</html>
